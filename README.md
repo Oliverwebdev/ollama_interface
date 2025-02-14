@@ -1,175 +1,179 @@
+🚀 **Aktualisierung der README.md**  
+Wir bringen die README auf den neuesten Stand und fügen alle **neuen Features & Verbesserungen** hinzu:  
+- **Neues Styling (OpenAI-Look)**
+- **Responsive Design**
+- **Anhänge (Bilder, PDFs, Text)**
+- **Fehlerbehebung & Debugging-Tipps**
 
-# Ollama Chat Interface
+---
 
-Dieses Projekt stellt eine einfache Chat-Anwendung bereit, um über ein React-Frontend und ein Python/FastAPI-Backend mit einer lokalen Ollama-Instanz zu interagieren. Ziel ist es, einen lokalen Sprachmodell-Server (Ollama) zu nutzen und dessen Ergebnisse in einer Chat-ähnlichen Oberfläche anzuzeigen.
+### **📌 Neue README.md**
+```md
+# EchoCore - KI Chat Interface
 
-## Inhaltsverzeichnis
+Dieses Projekt stellt eine moderne, interaktive Chat-Anwendung bereit, um über ein React-Frontend und ein Python/FastAPI-Backend mit einer lokalen Ollama-Instanz zu interagieren.  
+Es nutzt **modernes Styling (OpenAI-Look)**, **mobile Optimierung** und erlaubt den Upload von **Bildern, PDFs & Textdateien** zur Analyse durch das KI-Modell.
 
-*   [Überblick](#überblick)
-*   [Technologie-Stack](#technologie-stack)
-*   [Projektstruktur](#projektstruktur)
-*   [Voraussetzungen](#voraussetzungen)
-*   [Installation & Start](#installation--start)
-*   [Nutzung](#nutzung)
-*   [Konfiguration](#konfiguration)
-*   [Wichtige Dateien](#wichtige-dateien)
-*   [FAQ & Troubleshooting](#faq--troubleshooting)
-*   [Zukünftige Aufgaben](#zukünftige-aufgaben)
-*   [Lizenz](#lizenz)
+## 📌 Inhaltsverzeichnis
+* [Überblick](#überblick)
+* [Technologie-Stack](#technologie-stack)
+* [Projektstruktur](#projektstruktur)
+* [Voraussetzungen](#voraussetzungen)
+* [Installation & Start](#installation--start)
+* [Nutzung](#nutzung)
+* [Features](#features)
+* [Konfiguration](#konfiguration)
+* [Fehlersuche](#fehlersuche)
+* [Zukünftige Erweiterungen](#zukünftige-erweiterungen)
+* [Lizenz](#lizenz)
 
-## Überblick
+---
 
-*   **Frontend (React / Vite):** Bietet eine einfache Chat-Oberfläche im Stil eines Messenger-Layouts (ähnlich WhatsApp).
-*   **Backend (FastAPI):** Nimmt Anfragen vom Frontend entgegen und leitet sie an die lokale Ollama-Instanz weiter.
-*   **Ollama:** Ein lokaler Server, der Large Language Models (LLMs) laden und Inferenz ausführen kann.
-*   **Docker & Docker Compose:** Orchestriert sowohl das Python-Backend als auch das React-Frontend in Containern.
+## 🚀 **Überblick**
+- **Frontend (React + Vite)** → Moderner Chat mit OpenAI-Optik  
+- **Backend (FastAPI)** → Sendet Anfragen an Ollama (lokale KI)  
+- **Ollama** → Führt KI-Modelle aus (`deepseek-r1:7b` oder andere)  
+- **Docker & Docker Compose** → Container-Management  
 
-Die Kommunikation erfolgt wie folgt:
-
+### 🔗 **Datenfluss**
+```txt
 [Browser / Frontend] → [FastAPI-Backend in Docker] → [Ollama auf dem Host-System]
+```
 
+---
 
-## Technologie-Stack
+## ⚡ **Technologie-Stack**
+- **React mit Vite** (Frontend)
+- **Python 3.10 mit FastAPI** (Backend)
+- **Docker & Docker Compose**
+- **Ollama (Lokaler Modellserver)**
 
-*   React mit Vite (Frontend)
-*   Python 3.10 mit FastAPI (Backend)
-*   Docker Compose für das Container-Management
-*   Ollama als lokaler Modellserver (außerhalb von Docker gestartet)
+---
 
-## Projektstruktur
-ollamainterface/
+## 📂 **Projektstruktur**
+```
+echocore/
 ├── backend/
-│   ├── Dockerfile             # Dockerfile für das Backend (Python)
-│   ├── requirements.txt      # Enthält Python-Abhängigkeiten
-│   └── main.py               # FastAPI-Anwendung (mit POST /ollama Endpoint)
+│   ├── Dockerfile           # Backend (Python) Container Setup
+│   ├── requirements.txt     # Python-Abhängigkeiten
+│   ├── main.py              # FastAPI-App (mit /ollama Endpoint)
 ├── frontend/
-│   ├── Dockerfile             # Dockerfile für das Frontend (Node/Vite)
-│   ├── package.json          # NPM-Skripte und Abhängigkeiten
+│   ├── Dockerfile           # Frontend (Node/Vite) Container Setup
+│   ├── package.json         # NPM-Skripte & Dependencies
 │   ├── src/
-│   │   └── App.jsx           # React-Hauptkomponente (Chat-UI)
-│   └── App.css               # Basisstyles für den Chat
-├── docker-compose.yml         # Orchestrierung von frontend und backend
-├── README.md                 # Dieses Dokument
-└── .gitignore                # Ignoriert build-Dateien, node_modules, usw.
+│   │   ├── App.jsx          # React-Hauptkomponente (Chat-UI)
+│   │   ├── App.css          # Komplettes UI-Styling (Desktop + Mobile)
+│   │   └── Spinner.jsx      # Lade-Animation
+├── docker-compose.yml       # Orchestrierung für Frontend + Backend
+├── README.md                # Dieses Dokument
+└── .gitignore               # Verhindert unnötige Uploads
+```
 
-## Voraussetzungen
+---
 
-*   Docker (empfohlen Version 20.10 oder neuer)
-*   Docker Compose (Plugin oder separat, ab Version 1.29 aufwärts)
-*   Ollama lokal installiert (Version ≥ 0.4.5)
-*   Python lokal nur erforderlich, wenn du das Backend außerhalb von Docker starten willst. Sonst wird alles über Docker abgewickelt.
+## 🛠 **Voraussetzungen**
+- **Docker (empfohlen Version ≥ 20.10)**
+- **Docker Compose (≥ 1.29)**
+- **Ollama lokal installiert (≥ 0.4.5)**
+- **Python nur für lokale Backend-Starts notwendig**
 
-**Hinweis:** Unter Linux ist `host.docker.internal` nicht standardmäßig definiert. In diesem Projekt wird das Problem über Docker Compose mit `extra_hosts` gelöst.
+---
 
-## Installation & Start
+## 🚀 **Installation & Start**
+### **1️⃣ Docker Compose starten**
+```bash
+cd echocore
+sudo docker compose up --build
+```
+- **Frontend läuft unter:** `http://localhost:5173`
+- **Backend API unter:** `http://localhost:8000/docs`
+- **Ollama KI läuft auf:** `http://localhost:11434`
 
-1.  **Docker Compose bauen und Container starten**
+---
 
-    ```bash
-    cd ollamainterface
-    sudo docker compose up --build
-    ```
+## 💬 **Nutzung**
+### **📥 Eingabe**
+- Der User gibt eine Nachricht ein.
+- Falls **Anhänge (Bilder, PDFs, TXT) vorhanden sind**, werden sie mitgesendet.
 
-    Dabei werden die Images für `backend` und `frontend` erzeugt und beide Container gestartet.
-    Das Backend lauscht auf Port 8000 (wird auf den Host weitergeleitet).
-    Das Frontend lauscht auf Port 5173 (wird ebenfalls weitergeleitet).
+### **🔄 Verarbeitung**
+- **FastAPI empfängt die Anfrage**  
+- Falls eine Datei gesendet wurde:
+  - **TXT → Direkt in den Prompt eingefügt**
+  - **PDF → Text extrahiert & angehängt**
+  - **Bilder → OCR-Texterkennung mit Tesseract**
+  - **Andere Formate → In Base64 gewandelt**
 
-2.  **Ollama lokal starten**
+### **📤 Antwort**
+- Ollama verarbeitet die Eingabe & sendet das JSON zurück.
+- **Frontend zeigt die Antwort mit OpenAI-Optik im Chat an.**
+- Falls `<think>`-Tags erkannt werden, erscheinen diese als **Denkblasen**.
 
-    ```bash
-    export OLLAMA_HOST="[ungültige URL entfernt]"    # optional, wenn du auf allen Interfaces lauschen willst
-    ollama serve
-    ```
+---
 
-    Ollama lauscht per Default auf 127.0.0.1:11434.
-    Achte darauf, dass `host.docker.internal` vom Container aus auf Port 11434 zugreifen kann.
+## 🌟 **Features**
+✅ **🔹 Modernes Chat-Design (OpenAI-Stil)**  
+✅ **📱 100% Responsive (Mobile & Desktop)**  
+✅ **📂 Anhänge: PDFs, Bilder, Textdateien analysieren**  
+✅ **🧠 `<think>`-Tags als Denkblasen anzeigen**  
+✅ **🎨 Light & Dark Mode-Unterstützung (optional)**  
+✅ **⚡ Schnelle Performance dank Vite & FastAPI**
 
-3.  **Zugriff auf das Frontend**
+---
 
-    Rufe `http://localhost:5173` in deinem Browser auf.
-    Du solltest eine einfache Chat-Oberfläche sehen.
+## ⚙️ **Konfiguration**
+### **🔧 Frontend (`App.jsx`)**
+- **Chat-UI & Denkblasen-Logik**
+- **Request an `http://localhost:8000/ollama`**
+- **Styling in `App.css` für OpenAI-Optik**
 
-4.  **Backend-Check**
+### **🔧 Backend (`main.py`)**
+- **Ollama URL:** `http://host.docker.internal:11434/api/generate`
+- **Modelleinstellungen:** Standard `"deepseek-r1:7b"`  
+  → Kann für andere Modelle geändert werden.
 
-    Rufe `http://localhost:8000/docs` auf.
-    Du siehst die interaktive FastAPI-Dokumentation, mit dem POST-Endpoint `/ollama`.
+### **🔧 Docker Compose**
+- **Definiert `frontend` & `backend`**
+- `extra_hosts: "host.docker.internal:host-gateway"` für Netzwerkzugriff
 
-## Nutzung
+---
 
-1.  **Eingabe im Frontend**
+## 🔍 **Fehlersuche**
+### 🛠 **Backend gibt 500-Fehler**
+```bash
+docker compose logs backend
+```
+- **Lösung:** Prüfe, ob Ollama läuft (`ollama serve`).
 
-    Im Textfeld kannst du eine Nachricht oder Frage eingeben.
-    Mit Klick auf Senden wird diese an den FastAPI-Endpoint `/ollama` geschickt.
+### 🛠 **Frontend zeigt keine Nachrichten**
+- **Lösung:** `F12` → **Console öffnen** → Fehler in `messages` überprüfen.
 
-2.  **Backend-Weiterleitung**
+### 🛠 **Anhänge werden nicht verarbeitet**
+- **Lösung:** Backend-Logs prüfen (`docker compose logs backend`).
+- **Falls OCR nicht funktioniert:** `tesseract-ocr` nachinstallieren.
 
-    Das Backend erhält die Frage und baut einen Request an Ollama auf:
+---
 
-    ```json
-    {
-      "model": "deepseek-r1:7b",
-      "prompt": "Hier steht deine Frage...",
-      "stream": false
-    }
-    ```
+## 🚀 **Zukünftige Erweiterungen**
+✅ **Live-Streaming von Antworten (`stream: true`)**  
+✅ **Weitere Datei-Formate wie MP3-Transkription**  
+✅ **Offline-Modus für lokale Nutzung**  
+✅ **Modell-Auswahl direkt im Chat**  
 
-3.  **Ollama-Antwort**
+---
 
-    Ollama verarbeitet die Anfrage und gibt ein JSON zurück, z.B.:
+## 📜 **Lizenz**
+Dieses Projekt ist Open Source. Nutze es, verbessere es & entwickle es weiter! 🚀  
+Falls du Features beisteuern willst – Pull Requests sind willkommen! 😎  
+```
 
-    ```json
-    {
-      "response": "Hallo! Wie kann ich dir helfen?",
-      "done": true,
-      ...
-    }
-    ```
+---
 
-    Das Backend liefert genau dieses JSON an das Frontend weiter.
+## **🚀 Was ist neu in dieser README?**
+✅ **Aktueller Name (`EchoCore` statt `Ollama Chat Interface`)**  
+✅ **Neue Features (`think`-Tags, Responsive Design, OpenAI-Look)**  
+✅ **Optimierte Projektstruktur & Nutzung von Anhängen**  
+✅ **Fehlersuche-Abschnitt für Debugging-Tipps**  
+✅ **Zukunftsplanung für Erweiterungen**  
 
-4.  **Darstellung**
-
-    Das Frontend zeigt die Antwort in einer Chat-Bubble (links, Rolle = Bot).
-    Deine eigene Nachricht wird (rechts, Rolle = User) dargestellt.
-
-## Konfiguration
-
-*   **Frontend:**
-    *   `App.jsx`: Enthält das Chat-Layout. Ruft per `fetch("http://localhost:8000/ollama")` das Backend auf.
-*   **Backend (`main.py`):**
-    *   `OLLAMA_URL = "http://host.docker.internal:11434/api/generate"`: Hier wird Ollama angesprochen.
-    *   Ändere ggf. den Modellsnamen `"deepseek-r1:7b"` in `payload` auf deinen gewünschten Modellnamen.
-*   **Docker Compose:**
-    *   `extra_hosts` im `docker-compose.yml`: sorgt dafür, dass `host.docker.internal` in Linux-Containern aufgelöst werden kann.
-
-## Wichtige Dateien
-
-*   **`docker-compose.yml`**: Enthält die Definition für die Services `backend` und `frontend`. Mapped Ports 8000 und 5173.
-*   **`backend/main.py`**: FastAPI-Server, der `/ollama`-Endpoint bereitstellt.
-*   **`frontend/src/App.jsx`**: Zentrale React-Komponente mit Chat-Interface und Logik für das Absenden der Eingaben.
-*   **`frontend/src/App.css` (oder `App.css`):** Enthält das Basis-CSS für den Chatbubbles-Stil und ggf. Farbanpassungen.
-*   **`.gitignore`**: Verhindert das Einchecken von `node_modules/`, virtuellen Environments, Build-Artefakten usw.
-
-## FAQ & Troubleshooting
-
-1.  **500-Fehler beim Anfragen des Backends**
-
-    Schaue in `docker compose logs backend`. Oft liegt es daran, dass Ollama nicht erreichbar ist (etwa weil es nur auf 127.0.0.1 lauscht oder das Modell nicht geladen werden konnte).
-
-2.  **Kein Zugriff auf `host.docker.internal`**
-
-    Prüfe, ob Docker deine Version von `extra_hosts: "host.docker.internal:host-gateway"` unterstützt.
-    Oder setze Ollama auf 0.0.0.0:11434 und prüfe die IP per `curl` direkt im Container.
-
-3.  **CORS-Fehler**
-
-    In `main.py` ist `CORSMiddleware` aktiviert. Prüfe, ob `allow_origins` den korrekten Frontend-Port (`http://localhost:5173`) erlaubt.
-
-## Zukünftige Aufgaben
-
-*   Streaming aktivieren (`stream: true` im Ollama-Payload), um Token für Token zu empfangen.
-*   Authentifizierung (z.B. OAuth, Token) für das Backend, falls du die Instanz nicht öffentlich zugänglich machen willst.
-*   Design-Verbesserungen für das Chat-Frontend (Themes, Responsiveness, etc.).
-*   Weitere Modelle einbinden – je nach Ollama-Kompatibilität.
-
-
+---
