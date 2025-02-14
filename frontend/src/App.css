@@ -23,11 +23,31 @@ body, html, #root {
 
 /* Header */
 .chat-header {
-  padding: 1rem;
-  background-color: #40414f;
+  padding: 1.5rem;
+  background: linear-gradient(45deg, #ff1e56, #5b42f3);
   text-align: center;
-  font-size: 1.5rem;
+  border-bottom: 2px solid #ffffff;
+}
+
+/* EchoCore Überschrift */
+.chat-title {
+  font-size: 2.8rem;
   font-weight: bold;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow: 0 0 15px #ff1e56, 0 0 30px #5b42f3;
+  animation: neon-glow 1.5s infinite alternate;
+}
+
+/* Glow Animation */
+@keyframes neon-glow {
+  from {
+    text-shadow: 0 0 15px #ff1e56, 0 0 30px #5b42f3;
+  }
+  to {
+    text-shadow: 0 0 20px #ff1e56, 0 0 40px #5b42f3;
+  }
 }
 
 /* Nachrichtenbereich */
@@ -53,10 +73,44 @@ body, html, #root {
   text-align: right;
 }
 
-.message.bot {
-  background-color: #4a4a4a;
-  align-self: flex-start;
+/* Denkblasen (Think-Tag) */
+.think-bubble {
+  display: block !important;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-left: 4px solid #ff1e56;
+  padding: 10px;
+  margin: 5px 0;
+  font-size: 0.9rem;
+  color: #ccc;
+  font-style: italic;
+  border-radius: 5px;
+  white-space: pre-wrap;
+  z-index: 10; /* Falls es überdeckt wird */
+  position: relative; /* Damit es nicht von anderen Flex-Elementen verdrängt wird */
 }
+
+/* Fix für Bot-Nachrichten, falls sie die Denkblase verdecken */
+.message.bot {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: fit-content;
+  max-width: 80%;
+  position: relative;
+}
+
+/* Stelle sicher, dass die Denkblase VOR dem normalen Bot-Text kommt */
+.message.bot > .think-bubble {
+  order: -1;
+}
+
+
+/* Damit Denkblasen nicht unsichtbar sind */
+.think-bubble p {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
 
 /* Scroll-Button */
 .scroll-to-bottom {
@@ -111,37 +165,4 @@ body, html, #root {
   color: white;
   cursor: pointer;
   border: none;
-}
-
-.chat-input button:hover {
-  background-color: #0066cc;
-}
-
-/* Header */
-.chat-header {
-  padding: 1.5rem;
-  background: linear-gradient(45deg, #ff1e56, #5b42f3);
-  text-align: center;
-  border-bottom: 2px solid #ffffff;
-}
-
-/* EchoCore Überschrift */
-.chat-title {
-  font-size: 2.8rem;
-  font-weight: bold;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: #ffffff;
-  text-shadow: 0 0 15px #ff1e56, 0 0 30px #5b42f3;
-  animation: neon-glow 1.5s infinite alternate;
-}
-
-/* Glow Animation */
-@keyframes neon-glow {
-  from {
-    text-shadow: 0 0 15px #ff1e56, 0 0 30px #5b42f3;
-  }
-  to {
-    text-shadow: 0 0 20px #ff1e56, 0 0 40px #5b42f3;
-  }
 }
