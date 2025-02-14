@@ -11,6 +11,12 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Neue Farbvariablen für Konsistenz */
+  --background: #cdad4b;
+  --user-message: #59d09a;
+  --bot-message: #3d62ac;
+  --input-background: #37a883;
 }
 
 a {
@@ -24,10 +30,11 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
+  /* display: flex; */
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: var(--background);
 }
 
 h1 {
@@ -57,7 +64,7 @@ button:focus-visible {
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
-    background-color: #ffffff;
+    background-color: #59e70d;
   }
   a:hover {
     color: #747bff;

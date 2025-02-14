@@ -1,23 +1,33 @@
-/* Grundlegende Layout-Styles */
+/* Grundlegende Styles */
 body, html, #root {
   height: 100%;
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: 'Inter', sans-serif;
+  background-color: #202123;
+  color: #fff;
 }
 
+/* Chat-Container */
 .chat-container {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 100vh;
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
+  background-color: #343541;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Header */
 .chat-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 1rem;
-  color: rgb(243, 11, 11);
+  background-color: #40414f;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 /* Nachrichtenbereich */
@@ -25,129 +35,113 @@ body, html, #root {
   flex: 1;
   padding: 1rem;
   overflow-y: auto;
-  background-color: var(--background);
+  background-color: #343541;
 }
 
+/* Nachrichten-Styling */
 .message {
-  margin-bottom: 1rem;
-  max-width: 70%;
-  padding: 0.75rem 1rem;
+  max-width: 75%;
+  padding: 10px;
   border-radius: 8px;
-  line-height: 1.4;
+  margin-bottom: 10px;
+  font-size: 1rem;
 }
 
 .message.user {
-  background-color: var(--user-message);
+  background-color: #0a84ff;
   align-self: flex-end;
+  text-align: right;
 }
 
 .message.bot {
-  background-color: var(--bot-message);
+  background-color: #4a4a4a;
   align-self: flex-start;
+}
+
+/* Scroll-Button */
+.scroll-to-bottom {
+  position: fixed;
+  bottom: 100px;
+  right: 30px;
+  background-color: #0a84ff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.scroll-to-bottom.show {
+  display: flex;
 }
 
 /* Eingabebereich */
 .chat-input {
   display: flex;
   padding: 1rem;
-  background-color: var(--input-background);
-  border-top: 1px solid #ea0404;
+  background-color: #40414f;
 }
 
 .chat-input textarea {
   flex: 1;
-  resize: none;
-  padding: 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
   font-size: 1rem;
+  background-color: #242526;
+  color: white;
+}
+
+.file-upload {
+  margin-left: 10px;
 }
 
 .chat-input button {
-  margin-left: 1rem;
-  padding: 0 1.5rem;
+  margin-left: 10px;
+  padding: 10px;
+  border-radius: 5px;
   font-size: 1rem;
-  background-color: #4a76a8;
+  background-color: #0a84ff;
   color: white;
-  border: none;
-  border-radius: 4px;
   cursor: pointer;
+  border: none;
 }
 
 .chat-input button:hover {
-  background-color: #3a5e80;
+  background-color: #0066cc;
 }
 
-/* Theme-Variablen */
-
-/* Light Theme */
-.chat-container.light {
-  --background: #be5a3c;
-  --user-message: #59d09a;
-  --bot-message: #3d62ac;
-  --input-background: #ffffff;
-  background-color: #ffffff;
+/* Header */
+.chat-header {
+  padding: 1.5rem;
+  background: linear-gradient(45deg, #ff1e56, #5b42f3);
+  text-align: center;
+  border-bottom: 2px solid #ffffff;
 }
 
-.chat-container.light .chat-header {
-  background-color: #4a76a8;
+/* EchoCore Überschrift */
+.chat-title {
+  font-size: 2.8rem;
+  font-weight: bold;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow: 0 0 15px #ff1e56, 0 0 30px #5b42f3;
+  animation: neon-glow 1.5s infinite alternate;
 }
 
-/* Dark Theme */
-.chat-container.dark {
-  --background: #2e2e2e;
-  --user-message: #3a3a3a;
-  --bot-message: #4a4a4a;
-  --input-background: #1e1e1e;
-  background-color: #1e1e1e;
-}
-
-.chat-container.dark .chat-header {
-  background-color: #1a1a1a;
-}
-
-/* Toggle Switch Styling */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  height: 24px;
-}
-
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #a75151;
-  transition: 0.4s;
-  border-radius: 24px;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 18px;
-  width: 18px;
-  left: 3px;
-  bottom: 3px;
-  background-color: rgb(231, 16, 16);
-  transition: 0.4s;
-  border-radius: 50%;
-}
-
-input:checked + .slider {
-  background-color: #2196F3;
-}
-
-input:checked + .slider:before {
-  transform: translateX(26px);
+/* Glow Animation */
+@keyframes neon-glow {
+  from {
+    text-shadow: 0 0 15px #ff1e56, 0 0 30px #5b42f3;
+  }
+  to {
+    text-shadow: 0 0 20px #ff1e56, 0 0 40px #5b42f3;
+  }
 }
