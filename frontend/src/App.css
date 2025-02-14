@@ -1,0 +1,153 @@
+/* Grundlegende Layout-Styles */
+body, html, #root {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Header */
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  color: rgb(243, 11, 11);
+}
+
+/* Nachrichtenbereich */
+.chat-messages {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  background-color: var(--background);
+}
+
+.message {
+  margin-bottom: 1rem;
+  max-width: 70%;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  line-height: 1.4;
+}
+
+.message.user {
+  background-color: var(--user-message);
+  align-self: flex-end;
+}
+
+.message.bot {
+  background-color: var(--bot-message);
+  align-self: flex-start;
+}
+
+/* Eingabebereich */
+.chat-input {
+  display: flex;
+  padding: 1rem;
+  background-color: var(--input-background);
+  border-top: 1px solid #ea0404;
+}
+
+.chat-input textarea {
+  flex: 1;
+  resize: none;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.chat-input button {
+  margin-left: 1rem;
+  padding: 0 1.5rem;
+  font-size: 1rem;
+  background-color: #4a76a8;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.chat-input button:hover {
+  background-color: #3a5e80;
+}
+
+/* Theme-Variablen */
+
+/* Light Theme */
+.chat-container.light {
+  --background: #be5a3c;
+  --user-message: #59d09a;
+  --bot-message: #3d62ac;
+  --input-background: #ffffff;
+  background-color: #ffffff;
+}
+
+.chat-container.light .chat-header {
+  background-color: #4a76a8;
+}
+
+/* Dark Theme */
+.chat-container.dark {
+  --background: #2e2e2e;
+  --user-message: #3a3a3a;
+  --bot-message: #4a4a4a;
+  --input-background: #1e1e1e;
+  background-color: #1e1e1e;
+}
+
+.chat-container.dark .chat-header {
+  background-color: #1a1a1a;
+}
+
+/* Toggle Switch Styling */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #a75151;
+  transition: 0.4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: rgb(231, 16, 16);
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}

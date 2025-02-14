@@ -1,0 +1,38 @@
+# -------------------------------------------------
+# 1) Allgemeine System-Dateien / IDE-Dateien
+# -------------------------------------------------
+.DS_Store
+Thumbs.db
+*.log
+*.swp
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# -------------------------------------------------
+# 2) Node/React/Vite (Frontend)
+# -------------------------------------------------
+node_modules/
+dist/
+build/
+npm-debug.log
+yarn-error.log
+pnpm-lock.yaml
+.vite/
+*.local
+
+# -------------------------------------------------
+# 3) Python (Backend)
+# -------------------------------------------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+env/
+venv/
+
+models/
+*.bin
+*.pth
+*.pt
