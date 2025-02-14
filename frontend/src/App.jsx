@@ -36,43 +36,37 @@ function App() {
     if (!question.trim() && selectedFiles.length === 0) return;
     setLoading(true);
     setUploadStatus("");
-
-    if (question.trim()) {
-      setMessages((prev) => [...prev, { role: "user", content: question }]);
+  
+    // Nachricht des Nutzers im Chat anzeigen, bevor sie gesendet wird
+    setMessages((prev) => [...prev, { role: "user", content: question }]);
+  
+    const formData = new FormData();
+    formData.append("question", question);
+    formData.append("model", "deepseek-r1:7b");
+  
+    if (selectedFiles.length > 0) {
+      formData.append("file", selectedFiles[0]);
     }
-
+  
     try {
-      if (selectedFiles.length > 0) {
-        const formData = new FormData();
-        selectedFiles.forEach((file) => formData.append("file", file));
-
-        const uploadResponse = await fetch("http://localhost:8000/upload", {
-          method: "POST",
-          body: formData,
-        });
-        const uploadData = await uploadResponse.json();
-        setUploadStatus(`Hochgeladen: ${uploadData.filename}`);
-        setMessages((prev) => [...prev, { role: "bot", content: `Dateien hochgeladen: ${uploadData.filename}` }]);
-      }
-
-      if (question.trim()) {
-        const response = await fetch("http://localhost:8000/ollama", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ question }),
-        });
-        const data = await response.json();
-        setMessages((prev) => [...prev, { role: "bot", content: data.response || "Keine Antwort" }]);
-      }
+      const response = await fetch("http://localhost:8000/ollama", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
+  
+      setMessages((prev) => [...prev, { role: "bot", content: data.response || "Keine Antwort" }]);
     } catch (error) {
       console.error("Fehler bei der Anfrage:", error);
       setMessages((prev) => [...prev, { role: "bot", content: "Fehler: " + error.message }]);
     }
-
+  
     setQuestion("");
     setSelectedFiles([]);
     setLoading(false);
   };
+  
+
 
   return (
     <div className="chat-container">
