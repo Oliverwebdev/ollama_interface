@@ -31,7 +31,5 @@ def query_ollama(query: Query):
         response = requests.post(OLLAMA_URL, json=payload)
         response.raise_for_status()
     except Exception as e:
-        print("Fehler bei der Anfrage an Ollama:", str(e))
         raise HTTPException(status_code=500, detail=str(e))
-
     return response.json()
