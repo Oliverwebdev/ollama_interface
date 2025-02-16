@@ -1,14 +1,6 @@
-🚀 **Aktualisierung der README.md**  
-Wir bringen die README auf den neuesten Stand und fügen alle **neuen Features & Verbesserungen** hinzu:  
-- **Neues Styling (OpenAI-Look)**
-- **Responsive Design**
-- **Anhänge (Bilder, PDFs, Text)**
-- **Fehlerbehebung & Debugging-Tipps**
 
----
 
-### **📌 Neue README.md**
-```md
+
 # EchoCore - KI Chat Interface
 
 Dieses Projekt stellt eine moderne, interaktive Chat-Anwendung bereit, um über ein React-Frontend und ein Python/FastAPI-Backend mit einer lokalen Ollama-Instanz zu interagieren.  
