@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 import requests
 import logging
@@ -8,6 +9,7 @@ import fitz  # PyMuPDF für PDFs
 import pytesseract  # Tesseract OCR für Bilder
 from PIL import Image
 import base64
+import json
 
 app = FastAPI()
 
@@ -56,7 +58,7 @@ def convert_file_to_base64(file_bytes):
     return base64.b64encode(file_bytes).decode("utf-8")
 
 @app.post("/ollama")
-async def query_ollama(
+async def query_ollama_stream(
     question: str = Form(...), 
     model: str = Form("deepseek-r1:7b"),
     file: UploadFile = None
@@ -76,7 +78,6 @@ async def query_ollama(
         else:
             file_content = f"[Base64-Daten für {file.filename}]\n{convert_file_to_base64(file_bytes)}"
 
-    # Wenn es einen Anhang gibt, in den Prompt einfügen
     full_prompt = question
     if file and file_content:
         full_prompt += f"\n\n[Anhang: {file.filename}]\n{file_content}"
@@ -84,22 +85,18 @@ async def query_ollama(
     payload = {
         "model": model,
         "prompt": full_prompt,
-        "stream": False
+        "stream": True  # **Streaming aktivieren**
     }
 
-    try:
-        response = requests.post(OLLAMA_URL, json=payload)
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.HTTPError as http_err:
-        logger.error(f"HTTP-Fehler: {response.status_code}, {response.text}")
-        raise HTTPException(status_code=response.status_code, detail=f"HTTP-Fehler: {response.text}")
-    except requests.exceptions.ConnectionError:
-        logger.error("Verbindung zum Ollama-Server fehlgeschlagen.")
-        raise HTTPException(status_code=500, detail="Verbindung zum Ollama-Server fehlgeschlagen.")
-    except requests.exceptions.Timeout:
-        logger.error("Timeout bei der Anfrage.")
-        raise HTTPException(status_code=504, detail="Timeout bei der Anfrage.")
-    except Exception as e:
-        logger.error(f"Allgemeiner Fehler: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Fehler: {str(e)}")
+    def stream_generator():
+        try:
+            with requests.post(OLLAMA_URL, json=payload, stream=True) as response:
+                response.raise_for_status()
+                for line in response.iter_lines():
+                    if line:
+                        decoded_line = json.loads(line.decode("utf-8"))
+                        yield decoded_line.get("response", "")  # **Wort für Wort senden**
+        except requests.exceptions.RequestException as e:
+            yield f"Fehler: {str(e)}"
+
+    return StreamingResponse(stream_generator(), media_type="text/plain")

@@ -4,11 +4,6 @@ import "./App.css";
 
 function App() {
   const [messages, setMessages] = useState([]);
-  useEffect(() => {
-    console.log("Aktuelle Nachrichten:", JSON.stringify(messages, null, 2));
-  }, [messages]);
-  
-  
   const [question, setQuestion] = useState("");
   const [loading, setLoading] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -57,22 +52,31 @@ function App() {
         method: "POST",
         body: formData,
       });
-      const data = await response.json();
-      let botReply = data.response || "Keine Antwort";
 
-      // **Think-Tag erkennen und umwandeln**
-      if (botReply.includes("<think>")) {
-        const thinkContent = botReply.match(/<think>(.*?)<\/think>/s);
-        if (thinkContent) {
-          const cleanedThinkText = thinkContent[1].trim();
-          botReply = botReply.replace(
-            /<think>(.*?)<\/think>/gs,
-            `<div class="think-bubble"><p>${cleanedThinkText}</p></div>`
-          );
-        }
+      if (!response.body) {
+        throw new Error("Keine Antwort vom Server");
       }
 
-      setMessages((prev) => [...prev, { role: "bot", content: botReply }]);
+      const reader = response.body.getReader();
+      let botReply = "";
+      setMessages((prev) => [...prev, { role: "bot", content: "" }]);
+
+      const decoder = new TextDecoder();
+      const processText = async () => {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          botReply += decoder.decode(value, { stream: true });
+
+          setMessages((prev) => {
+            const updatedMessages = [...prev];
+            updatedMessages[updatedMessages.length - 1].content = botReply;
+            return updatedMessages;
+          });
+        }
+      };
+
+      await processText();
     } catch (error) {
       console.error("Fehler bei der Anfrage:", error);
       setMessages((prev) => [...prev, { role: "bot", content: "Fehler: " + error.message }]);
@@ -81,6 +85,14 @@ function App() {
     setQuestion("");
     setSelectedFiles([]);
     setLoading(false);
+  };
+
+  // Funktion für Enter-Taste im Textfeld
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit();
+    }
   };
 
   return (
@@ -109,6 +121,7 @@ function App() {
           rows="2"
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
+          onKeyDown={handleKeyDown}  // <== Enter-Taste hinzufügen
           placeholder="Deine Frage eintippen ..."
           disabled={loading}
         />
