@@ -1,6 +1,4 @@
 
-
-
 # EchoCore - KI Chat Interface
 
 Dieses Projekt stellt eine moderne, interaktive Chat-Anwendung bereit, um über ein React-Frontend und ein Python/FastAPI-Backend mit einer lokalen Ollama-Instanz zu interagieren.  
@@ -130,21 +128,7 @@ sudo docker compose up --build
 
 ---
 
-## 🔍 **Fehlersuche**
-### 🛠 **Backend gibt 500-Fehler**
-```bash
-docker compose logs backend
-```
-- **Lösung:** Prüfe, ob Ollama läuft (`ollama serve`).
 
-### 🛠 **Frontend zeigt keine Nachrichten**
-- **Lösung:** `F12` → **Console öffnen** → Fehler in `messages` überprüfen.
-
-### 🛠 **Anhänge werden nicht verarbeitet**
-- **Lösung:** Backend-Logs prüfen (`docker compose logs backend`).
-- **Falls OCR nicht funktioniert:** `tesseract-ocr` nachinstallieren.
-
----
 
 ## 🚀 **Zukünftige Erweiterungen**
 ✅ **Live-Streaming von Antworten (`stream: true`)**  
@@ -156,16 +140,6 @@ docker compose logs backend
 
 ## 📜 **Lizenz**
 Dieses Projekt ist Open Source. Nutze es, verbessere es & entwickle es weiter! 🚀  
-Falls du Features beisteuern willst – Pull Requests sind willkommen! 😎  
 ```
 
----
 
-## **🚀 Was ist neu in dieser README?**
-✅ **Aktueller Name (`EchoCore` statt `Ollama Chat Interface`)**  
-✅ **Neue Features (`think`-Tags, Responsive Design, OpenAI-Look)**  
-✅ **Optimierte Projektstruktur & Nutzung von Anhängen**  
-✅ **Fehlersuche-Abschnitt für Debugging-Tipps**  
-✅ **Zukunftsplanung für Erweiterungen**  
-
----
