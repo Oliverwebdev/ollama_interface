@@ -143,3 +143,4 @@ Dieses Projekt ist Open Source. Nutze es, verbessere es & entwickle es weiter! ð
 ```
 
 
+ OLLAMA_HOST=0.0.0.0 OLLAMA_PORT=11434 ollama serve
